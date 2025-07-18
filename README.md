@@ -23,6 +23,5 @@ Bu repo, orijinal NoFap Takip projesinin **yenilenmiş ve güçlendirilmiş** ha
 | Gizli Reset           | ❌         | ✅ (5 tık) |
 | Relapse Sorgulama     | Basit      | Detaylı    |
 | Performans            | %70        | %95+       |
-Bunun nedeni webview kullanmış olmamız.
 ---
-
+Bunun nedeni webview kullanmış olmam. HTML'yi APK'ya dönüştürdüm, "Website 2 APK Builder Pro" ile.
