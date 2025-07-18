@@ -1,14 +1,30 @@
-# 💪 NoFap Takip 2.0
+# 🔄 NoFap Takip 2.0 - Eski Repoya Taşındı!
 
-**NoFap mücadeleni takip etmek için modern, şık ve işlevsel bir uygulama.**  
-🔥 **Yeni özelliklerle** gelen 2.0 sürümü artık daha güçlü!
+**"Eski köye yeni adet getirdik!"**  
+Bu repo, orijinal NoFap Takip projesinin **yenilenmiş ve güçlendirilmiş** halidir. Tüm temel özellikler korunarak modern bir yüz kazandırıldı.
 
 ---
 
-## 📱 Özellikler
-- ✅ **Günlük takip sistemi** (Streak sayacı)  
-- 📅 **Akıllı takvim** (Temiz/Relapse günleri renkli gösterim)  
-- 🌙 **Koyu/Açık tema** (Göz yormayan tasarım)  
-- 📊 **Geçmiş istatistikler** (Eski streaklerin kayıtlı)  
-- 🔒 **Yerel depolama** (İnternet gerektirmez)  
-- ✨ **Motivasyon sözleri** (Rastgele gösterim)  
+## ❓ Neden Taşındık?
+- 🏗️ **Kod temeli tamamen revize edildi**  
+- 🐛 **Eski repo'daki kritik bug'lar giderildi**  
+- 🌈 **Yeni özellikler eklemek için altyapı hazır**  
+
+> ⚠️ **Dikkat:** Eski repo (`NoFap-Takip`) artık **desteklenmiyor**! Tüm güncellemeler burada yapılacak.
+
+---
+
+## 🆕 2.0'da Neler Var?
+| Özellik               | Eski Sürüm | Yeni Sürüm |
+|-----------------------|------------|------------|
+| Tema Desteği          | ❌         | ✅         |
+| Gizli Reset           | ❌         | ✅ (5 tık) |
+| Relapse Sorgulama     | Basit      | Detaylı    |
+| Performans            | %70        | %95+       |
+
+---
+
+## 📥 Kurulum
+```bash
+git clone https://github.com/anotherphonker/NoFap-Takip-2.0.git
+cd NoFap-Takip-2.0
