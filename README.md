@@ -1,13 +1,5 @@
-<div align="center">
-  
-  <!-- RGB Logo (GIF Embed) -->
-  <img src="https://gifyu.com/image/bK4C7" alt="NoFap RGB Logo" width="400" style="border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-  
-  <br>
-  
+<img width="200" height="40" alt="ezgif-5f915a71f7ced7" src="https://github.com/user-attachments/assets/ab90f792-eaba-4527-957c-fa22d99fc3e4" />
 
-
-</div>
 # 🔄 NoFap Takip 2.0 - Yeni Repoya Taşındı!
 
 **"Eski köye yeni adet getirdik!"**  
