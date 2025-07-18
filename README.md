@@ -1,4 +1,4 @@
-# 🔄 NoFap Takip 2.0 - Eski Repoya Taşındı!
+# 🔄 NoFap Takip 2.0 - Yeni Repoya Taşındı!
 
 **"Eski köye yeni adet getirdik!"**  
 Bu repo, orijinal NoFap Takip projesinin **yenilenmiş ve güçlendirilmiş** halidir. Tüm temel özellikler korunarak modern bir yüz kazandırıldı.
