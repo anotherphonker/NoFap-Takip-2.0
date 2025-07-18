@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NoFap Takip 2.0</title>
+<style>
+:root{
+  --bg:#ffffffcc;--text:#1c1b1f;--primary:#00695c;--clean:#4caf50;
+  --dirty:#f44336;--surface:#e0f2f1;--disable:#9e9e9e;
+}
+[data-theme='dark']{
+  --bg:#121212cc;--text:#e6e1e5;--primary:#4db6ac;--clean:#66bb6a;
+  --dirty:#ef5350;--surface:#1e1e1e80;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;
+     background:linear-gradient(135deg,#4db6ac 0%,#00897b 100%);color:var(--text);transition:background .4s;}
+.glass{background:var(--surface);border-radius:24px;padding:32px 40px;text-align:center;
+       box-shadow:0 8px 30px rgba(0,0,0,.15);animation:fadeIn 1s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+.miniCard{max-width:320px;width:90%;animation:slideUp 1s}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.big14{font-size:96px;font-weight:700;color:var(--primary);line-height:1}
+.subtitle{font-size:22px;margin-top:4px}
+.quote{font-size:16px;margin:8px 0 20px;opacity:.8;font-style:italic}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:16px auto 0;max-width:280px;animation:zoomIn 1s}
+@keyframes zoomIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+
+.day:hover{transform:scale(1.1)}
+.legend{font-size:12px;margin-top:8px}
+.btnGroup button{padding:8px 18px;border:none;border-radius:50px;background:var(--primary);color:#fff;font-weight:600;cursor:pointer;margin:6px;transition:background .3s}
+.btnGroup button:hover{background:#004d40}
+.btnGroup button:disabled{background:var(--disable);cursor:not-allowed}
+.theme-toggle{position:absolute;top:20px;right:20px;font-size:16px;cursor:pointer;display:flex;align-items:center;gap:6px;background:var(--surface);padding:6px 12px;border-radius:50px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.modal{display:none;position:fixed;inset:0;background:#00000080;backdrop-filter:blur(6px);align-items:center;justify-content:center;z-index:999;animation:fadeIn .3s}
+.modal .glass{max-width:340px;width:90%}
+input,textarea{width:100%;padding:8px;border-radius:12px;border:1px solid #ffffff50;background:#ffffff30;color:var(--text)}
+.historyList{max-height:200px;overflow-y:auto;margin-top:12px;text-align:left;font-size:14px}
+
+select {
+  background-color: var(--surface);
+  color: var(--text);
+  border: 1px solid #999;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-weight: 600;
+  margin: 8px 4px;
+  appearance: none;
+  box-shadow: 0 1px 3px #00000030;
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+button {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 50px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 6px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background: #004d40;
+  transform: scale(1.05);
+}
+
+button:disabled {
+  background: var(--disable);
+  cursor: not-allowed;
+}
+
+.day {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: transform 0.3s, background 0.3s;
+  border: 2px solid var(--text);
+  color: var(--text);
+  background: transparent;
+}
+
+.day.clean {
+  background: var(--clean);
+  color: #fff;
+  border-color: var(--clean);
+}
+
+.day.dirty {
+  background: var(--dirty);
+  color: #fff;
+  border-color: var(--dirty);
+}
+
+.day.today {
+  outline: 2px solid var(--primary);
+  box-shadow: 0 0 6px var(--primary);
+}
+
+.greeting {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.header {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rainbow 8s linear infinite;
+  background-size: 400% 100%;
+  cursor: pointer;
+  user-select: none;
+}
+
+@keyframes rainbow {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+</style>
+</head>
+<body>
+
+<div class="header" id="secretReset">NoFap Takip 2.0</div>
+<div class="theme-toggle" id="themeToggle">
+  <span id="themeText">Koyu Moda Geç</span>
+  <span id="themeIcon">🌙</span>
+</div>
+
+<!-- 1) İlk ekran -->
+<div class="glass miniCard" id="setupCard">
+  <h3>Hoş geldin</h3>
+  <label>İsim</label>
+  <input id="nameInput" placeholder="Adın"/>
+  <label>İlk temiz gün</label>
+  <input id="startDateInput" type="date"/>
+  <button onclick="saveSetup()">Kaydet</button>
+</div>
+
+<!-- 2) Ana ekran -->
+<div class="glass" id="mainCard" style="display:none">
+  <div class="greeting" id="greeting">Merhaba, Dostum</div>
+  <div class="big14" id="streak">0</div>
+  <div class="subtitle">gündür mastürbasyon yapmıyorsun</div>
+  <div class="quote" id="quote"></div>
+
+  <!-- Takvim -->
+  <select id="monthSel" onchange="renderCal()"></select>
+  <select id="yearSel" onchange="renderCal()"></select>
+  <div class="calendar" id="calendar"></div>
+  <div class="legend">Yeşil = temiz  Kırmızı = relapse</div>
+
+  <div class="btnGroup">
+    <button onclick="openResetModal()">Relapse</button>
+    <button onclick="openHistory()">Geçmiş</button>
+    <button onclick="openAbout()">Hakkında</button>
+  </div>
+</div>
+
+<!-- 3) Modallar -->
+<!-- Reset / Neden -->
+<div class="modal" id="resetModal">
+  <div class="glass">
+    <h3>Neden relapse oldun?</h3>
+    <textarea id="resetReason" placeholder="Neden pes ettin?" rows="4"></textarea>
+    <button id="resetBtn" onclick="resetAll()">Tamam</button>
+    <button onclick="closeResetModal()">İptal</button>
+  </div>
+</div>
+
+<!-- Geçmiş -->
+<div class="modal" id="historyModal">
+  <div class="glass">
+    <h3>Geçmiş Streakler</h3>
+    <div class="historyList" id="historyList"></div>
+    <button onclick="closeHistory()">Kapat</button>
+  </div>
+</div>
+
+<!-- Hakkında -->
+<div class="modal" id="aboutModal">
+  <div class="glass">
+    <h3>Hakkında</h3>
+    <p><strong>Yapımcı:</strong> Resul Çelik</p>
+    <a href="https://github.com/anotherphonker" target="_blank" style="color:var(--primary);text-decoration:none;font-weight:600">GitHub Profili</a>
+    <br><br>
+    <button onclick="closeAbout()">Kapat</button>
+  </div>
+</div>
+
+<script>
+const today=new Date(),todayStr=today.toISOString().split('T')[0];
+let clickCount = 0;
+let lastClickTime = 0;
+
+/* tema */
+function updateThemeButton() {
+  const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.getElementById('themeText').textContent = dark ? 'Açık Moda Geç' : 'Koyu Moda Geç';
+  document.getElementById('themeIcon').textContent = dark ? '☀️' : '🌙';
+}
+
+document.getElementById('themeToggle').onclick=()=>{
+  const dark=document.documentElement.getAttribute('data-theme')==='dark';
+  document.documentElement.setAttribute('data-theme',dark?'light':'dark');
+  localStorage.setItem('theme',dark?'light':'dark');
+  updateThemeButton();
+};
+
+// Başlangıçta tema butonunu güncelle
+(()=>{
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeButton();
+})();
+
+const get=k=>localStorage.getItem(k)||'';
+const set=(k,v)=>localStorage.setItem(k,v);
+let name=get('name')||'';
+let startDate=get('startDate')||todayStr;
+let history=JSON.parse(localStorage.getItem('history')||'[]');
+
+const quotes=[
+  "Zafer, zafer benimdir diyebilenindir. Başarı ise “başaracağım” diye başlayarak sonunda “başardım diyenindir. (Mustafa Kemal Atatürk)",
+"Kazanma isteği ve başarıya ulaşma arzusu birleşirse kişisel mükemmelliğin kapısını açar. (Konfüçyüs)",
+"Hiçbir şeyden vazgeçme, çünkü sadece kaybedenler vazgeçer. (Abraham Lincoln)",
+"Başarıya çıkan asansör bozuk. Bekleyerek zaman kaybetmeyin, adım adım merdivenleri çıkmaya başlayın. (Joe Girard)",
+"Fırsatlar durup dururken karşınıza çıkmaz, onları siz yaratırsınız. (Chris Grosser)",
+"Şansa çok inanırım ve ne kadar çok çalıştıysam ona o kadar çok sahip oldum. (Thomas Jefferson)",
+"Bir şeye başlayıp başarısız olmaktan daha kötü tek şey hiçbir şeye başlamamaktır. (Seth Godin)",
+"Sadece sınırlarını aşmanın riskini alanlar ne kadar ileri gidebildiklerini görürler. (T.S. Elliot)",
+"Hayat her ne kadar zor görünse de, yapabileceğimiz ve başarabileceğimiz bir şey mutlaka vardır. (Stephen Hawking)",
+"Bir şeyi başarmak ne kadar zorsa, zaferin tadı o kadar güzeldir. (Pele)",
+"Bir şeye başlayıp başarısız olmaktan daha kötü tek şey hiçbir şeye başlamamaktır. (Seth Godin)",
+"Hiç kimse başarı merdivenine elleri cebinde tırmanmamıştır. (J. Keth Moorhead)",
+"Ne zaman başarılı bir iş görseniz, birisi bir zamanlar mutlaka cesur bir karar almıştır. (Peter Ducker)",
+"Sessizce sıkı çalışın, bırakın başarı sesiniz olsun. (Frank Ocean)",
+"Eğer her şey kontrol altında gibi görünüyorsa, yeterince hızlı gitmiyorsunuzdur. (Mario Andretti)",
+"Başarısız insanlar içerisinde bulundukları duruma göre karar verirler. Başarılı insanlar ise olmak istedikleri yere göre karar verirler. (Benjamin Hardy)",
+"Sadece başarılı bir insan olmaya değil, değerli bir insan olmaya çalışın. (Albert Einstein)",
+"Başarı son değildir, başarısızlık ise ölümcül değildir: Önemli olan ilerlemeye cesaret etmektir. (Winston S. Churchill)",
+"Hayatımı sadece ben değiştirebilirim. Kimse benim için bunu yapmaz. (Carol Burnett)",
+"Hiç kimse geriye gidip yeni bir başlangıç yapamaz ama bugün yeni bir son yapıp yeniden başlayabilir. (Frank M. Robinson)",
+"Diğerlerinden daha akıllı olmak zorunda değiliz. Diğerlerinden daha disiplinli olmak zorundayız. (Warren Buffett)",
+"Uyandığınızda; yaşamanın, zevk almanın, düşünmenin ve sevmenin ne kadar büyük bir ayrıcalık olduğunu hatırlayın. (Marcus Aurelius)",
+"Siz kendinize inanın, başkaları da size inanacaktır. (Goethe)",
+"Karanlıktan korkan bir çocuğu kolayca affedebiliriz. Hayatın gerçek trajedisi büyükler ışıktan korktuğunda başlar. (Plato)",
+"Dünyayı değiştirebilen insanla buna inanacak kadar deli olanlardır. (Steve Jobs)",
+"Sadece görülmeyeni gören imkansızı başarabilir. (Frank L. Gaines)",
+"Her gün kendini yeniliyorsun. Bazen başarılı olursun, bazen olamazsın, ama önemli olan ortalamadır. (Satya Nadella)",
+"Kısa vadede acımasızca dürüst olun, uzun vade için ise iyimser ve kendinizden emin olun. (Reed Hastings)",
+"Birisi size bir şeyi yapamayacağını söylediğinde, belki de size sadece kendi yapamadıklarını söylüyordur. (Sheldon Cahoon)",
+"Kendinizi sınırlamayın. Çoğu insan yapabileceklerini düşündükleri şeyler konusunda kendilerini sınırlarlar. Sadece zihninizin gidebildiği kadar ileriye gidebilirsiniz. Neye inanırsanız, onu yapabilirsiniz. (Mary Kay Ash)",
+"Zeki insanlar herkesten ve her şeyden öğrenirler. Ortalama insanlar deneyimlerinden öğrenirler. Aptal insanlar ise zaten bütün cevaplara sahiptir. (Socrates)",
+"Bardağın yarısının dolu mu, boş mu olduğunu tartışan insanlar asıl odaklanmaları gereken noktayı kaçırıyorlar. Bardak doldurulabilir. (Anonim)",
+"Yüzünüzü güneşe çevirin, böylece gölgeler her zaman arkanızda kalacaktır. (Walt Whitman)",
+"Dün zekiydim, bu yüzden dünyayı değiştirmek istedim. Şimdi ise bilgeyim, bu sebeple kendimi değiştiriyorum. (Rumi)",
+"Eğer bir şeyi değiştiremiyorsanız bırakın. Değiştiremediğiniz şeylerin mahkûmu olmayın. (Tsang Lindsay)",
+"Dışarıda olanları her zaman kontrol edemezsiniz. Ama içinde olanları edebilirsin. (Wayne Dyer)",
+"En büyük düşmanınızın iki kulağınızın arasında yaşamadığına emin olun. (Laird Hamilton)",
+"Dünden ders alın, bugün için yaşayın, yarın için umutlu olun. (Albert Einstein)",
+"Bugün içinde bulunduğunuz mücadele, yarın ihtiyacınız olan gücü geliştiriyor. (Robert Tew)",
+"Hayat her ne kadar zor görünse de, yapabileceğiniz ve başarabileceğiniz bir şey her zaman vardır. (Stephen Hawking)",
+"Çatışman ne kadar zorsa, zaferin de o kadar şereflidir! (Thomas Paine)",
+"Yüzüstü yere serilseniz bile, hala ileriye doğru hareket ediyorsunuzdur! (Victor Kiam)",
+"Tanrıdan kolay bir hayat dilemeyin: zor olana dayanabilecek güç dileyin. (Bruce Lee)",
+"Bir gün geçmişe baktığınızda en güzel yıllarınızın mücadele ile geçen yıllar olduğunu göreceksiniz. (Sigmund Freud)",
+"Girmeye korktuğun mağara, umduğun hazineyi saklıyor olabilir. (Joseph Campbell)",
+"Mağlubiyete uğrayınca ümitsizliğe kapılma, her başarısızlıkta bir zafer arzusu yatar. (Germain Martin)",
+"Yüzleşmediğimiz korkularımız sınırlarımızı oluşturur. (Amy Elizabeth)",
+"Zorluklarla karşılaşmak istemeyenler, felaketlere layıktır. (Lucius Annaeus Seneca)",
+"Dünya herkesi kırar ve bazıları kırılan yerlerinden güçlenir. (Ernest Hemingway)",
+"Acı sizi değiştirebilir ancak bu değişim kötü olmak zorunda değildir. Acıyı alın ve bilgeliğe dönüştürün. (Dalai Lama)",
+"Eğer insanlar ne kadar ileri gidebileceğinizi sorguluyorsa, onları duyamayacağınız kadar ileriye gidin. (Michele Ruiz)",
+"İnsanları güçlendiren şey, zor günlerdir. (Aly Raisman)",
+"Zorluklarınızı sınırlamayın. Sınırlarınızı zorlayın. (Anonim)",
+"Yenilmek geçici bir durumdur. Pes etmek ise onu kalıcı yapar. (Marilyn Vos Savant)",
+"Bazen karanlık bir yerdeyken gömüldüğünüzü düşünürsünüz. Ama aslında ekilmişsinizdir. (Christine Caine)",
+"Vaktinde bana “hayır” diyen herkese minnettarım. Onlar sayesinde kendi işimi kendim yapabiliyorum. (Wayne W. Dyer)",
+"Pes etmeyi düşündüğünüzde, hala haksız çıkarmanız gereken insanlar olduğunu hatırlayın. (Anonim)"
+];
+
+// Gizli reset mekanizması
+document.getElementById('secretReset').addEventListener('click', () => {
+  const now = Date.now();
+  if (now - lastClickTime > 1000) { // 1 saniyeden fazla geçmişse sıfırla
+    clickCount = 0;
+  }
+  clickCount++;
+  lastClickTime = now;
+  
+  if (clickCount >= 5) {
+    localStorage.clear();
+    document.getElementById('mainCard').style.display='none';
+    document.getElementById('setupCard').style.display='block';
+    document.getElementById('nameInput').value='';
+    document.getElementById('startDateInput').value=todayStr;
+    name = '';
+    startDate = todayStr;
+    history = [];
+    clickCount = 0;
+    alert("Sistem sıfırlandı gardaş! Yeniden başlıyoruz 💪");
+  }
+});
+
+function saveSetup(){
+  name=document.getElementById('nameInput').value.trim()||'Dostum';
+  startDate=document.getElementById('startDateInput').value||todayStr;
+  set('name',name);set('startDate',startDate);
+  initApp();
+}
+function initApp(){
+  document.getElementById('setupCard').style.display='none';
+  document.getElementById('mainCard').style.display='block';
+  document.getElementById('greeting').textContent = `Merhaba, ${name}`;
+  fillSelects();renderCal();randomQuote();
+}
+function streakDays(){
+  return Math.floor((today-new Date(startDate))/864e5);
+}
+function randomQuote(){
+  document.getElementById('quote').textContent=quotes[Math.floor(Math.random()*quotes.length)];
+}
+function fillSelects(){
+  const mSel=document.getElementById('monthSel'),ySel=document.getElementById('yearSel');
+  mSel.innerHTML='';
+  ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık']
+    .forEach((m,i)=>mSel.add(new Option(m,i)));
+  ySel.innerHTML='';
+  for(let y=2020;y<=today.getFullYear()+1;y++)ySel.add(new Option(y,y));
+  mSel.value=today.getMonth();
+  ySel.value=today.getFullYear();
+}
+function renderCal(){
+  const days=streakDays();
+  document.getElementById('streak').textContent=Math.max(0,days);
+  const y=+document.getElementById('yearSel').value;
+  const m=+document.getElementById('monthSel').value;
+  const first=new Date(y,m,1).getDay();
+  const dim=new Date(y,m+1,0).getDate();
+  const cal=document.getElementById('calendar');
+  cal.innerHTML='';
+
+  // boş hücreler
+  for(let i=0;i<first;i++) cal.appendChild(document.createElement('div'));
+
+  for(let d=1;d<=dim;d++){
+    const cell=document.createElement('div');
+    cell.className='day';
+    const curDate=new Date(y,m,d);
+    const dateStr=curDate.toISOString().split('T')[0];
+
+    if(dateStr===todayStr) cell.classList.add('today');
+
+    if(curDate<new Date(startDate)){
+      // başlamadan önce
+    }else if(curDate>today){
+      // gelecek
+    }else{
+      const relapse=history.some(h=>h.endDate===dateStr);
+      cell.classList.add(relapse?'dirty':'clean');
+    }
+    cell.textContent=d;
+    cal.appendChild(cell);
+  }
+}
+function openResetModal(){
+  document.getElementById('resetModal').style.display='flex';
+  document.getElementById('resetReason').value='';
+  toggleResetBtn();
+}
+function closeResetModal(){document.getElementById('resetModal').style.display='none';}
+function toggleResetBtn(){
+  const reason=document.getElementById('resetReason').value.trim();
+  const btn=document.getElementById('resetBtn');
+  btn.disabled=!reason;
+}
+document.getElementById('resetReason').addEventListener('input',toggleResetBtn);
+
+function openHistory(){
+  const list=document.getElementById('historyList');
+  list.innerHTML='';
+  if(!history.length) list.innerHTML='<p>Henüz kayıt yok.</p>';
+  else history.forEach(h=>list.insertAdjacentHTML('beforeend',
+    `<p><strong>${h.streak} gün</strong> – bitiş: ${h.endDate}<br>neden: ${h.reason}</p>`));
+  document.getElementById('historyModal').style.display='flex';
+}
+function closeHistory(){document.getElementById('historyModal').style.display='none';}
+function openAbout(){document.getElementById('aboutModal').style.display='flex';}
+function closeAbout(){document.getElementById('aboutModal').style.display='none';}
+
+function resetAll(){
+  const reason=document.getElementById('resetReason').value.trim();
+  if(!reason) return;
+  history.unshift({streak:streakDays(),endDate:todayStr,reason});
+  localStorage.setItem('history',JSON.stringify(history));
+  localStorage.setItem('startDate',todayStr);
+  renderCal();
+  closeResetModal();
+}
+if(name && startDate) initApp();
+else document.getElementById('startDateInput').value=todayStr;
+</script>
+</body>
+</html>
