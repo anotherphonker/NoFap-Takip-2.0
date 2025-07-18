@@ -23,6 +23,6 @@ Bu repo, orijinal NoFap Takip projesinin **yenilenmiş ve güçlendirilmiş** ha
 | Gizli Reset           | ❌         | ✅ (5 tık) |
 | Relapse Sorgulama     | Basit      | Detaylı    |
 | Performans            | %70        | %95+       |
-
+Bunun nedeni webview kullanmış olmamız.
 ---
 
