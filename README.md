@@ -10,7 +10,7 @@ Bu repo, orijinal NoFap Takip projesinin **yenilenmiş ve güçlendirilmiş** ha
 - 🐛 **Eski repo'daki kritik bug'lar giderildi**  
 - 🌈 **Yeni özellikler eklemek için altyapı hazır**  
 
-> ⚠️ **Dikkat:** Eski repo (`NoFap-Takip`) artık **desteklenmiyor**! Tüm güncellemeler burada yapılacak.
+> ⚠️ **Dikkat:** Eski repo (`NoFapTakip`) artık **desteklenmiyor**! Tüm güncellemeler burada yapılacak.
 
 ---
 
@@ -24,7 +24,3 @@ Bu repo, orijinal NoFap Takip projesinin **yenilenmiş ve güçlendirilmiş** ha
 
 ---
 
-## 📥 Kurulum
-```bash
-git clone https://github.com/anotherphonker/NoFap-Takip-2.0.git
-cd NoFap-Takip-2.0
